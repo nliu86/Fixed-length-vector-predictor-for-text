@@ -10,9 +10,9 @@ How to use deep learning to build a recommendation system or product search engi
 1.	**Word vector**  
   *	It’s a little bit challenging to figure out the best training parameters for word2vec. Fortunately, Levy & Goldberg’s paper pointed us to the right direction:
 Improving Distributional Similarity with Lessons Learned from Word Embeddings
-From their paper:
-    *	SGNS (Skip-Grams with Negative Sampling) is a robust baseline. While it might not be the best method for every task, it does not significantly underperform in any scenario. Moreover, SGNS is the fastest method to train, and cheapest (by far) in terms of disk space and memory consumption.
-    *	With SGNS, prefer many negative samples.
+From their paper:  
+    *i) SGNS (Skip-Grams with Negative Sampling) is a robust baseline. While it might not be the best method for every task, it does not significantly underperform in any scenario. Moreover, SGNS is the fastest method to train, and cheapest (by far) in terms of disk space and memory consumption.*  
+    *ii) With SGNS, prefer many negative samples.*  
 My own experience with word2vec + deep learning also shows SGNS (cbow=0 and hs=0) is the best option.
   *	For SGNS, here is what I believe really happens during the training:
 If two words appear together, the training will try to increase their cosine similarity. If two words never appear together, the training will reduce their cosine similarity. So if there are a lot of user queries such as “auto insurance” and “car insurance”, then “auto” vector will be similar to “insurance” vector (cosine similarity ~= 0.3) and “car” vector will also be similar to “insurance” vector. Since “insurance”, “loan” and “repair” rarely appear together in the same context, their vectors have small mutual cosine similarity (cosine similarity ~= 0.1). We can treat them as orthogonal to each other and think them as different dimensions. After training is complete, “auto” vector will be very similar to “car” vector (cosine similarity ~= 0.6) because both of them are similar in “insurance” dimension, “loan” dimension and “repair” dimension.   This intuition will be useful if you want to better design your training data to meet the goal of your text learning task.
