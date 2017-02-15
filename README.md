@@ -39,7 +39,7 @@ We have to set our expectation reasonable here: there exists no such magic to ac
 
 2.  Do high dimension nearest neighbor search to find similar items.
 -----------------------
-All the vectors above can be used to do high dimension nearest neighbor search to find similar queries, similar items or similar products. We can either use bruteforce or use NMSLIB to do similarity search.
+All the vectors above can be used to do high dimension nearest neighbor search to find similar queries, similar items or similar products. We can either use bruteforce or use [NMSLIB](https://github.com/searchivarius/nmslib) to do similarity search.
 
 3. Build a deep learning model using user feedback such as clicks/purchases.
 -----------------------
