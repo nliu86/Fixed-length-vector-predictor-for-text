@@ -7,7 +7,7 @@ How to use deep learning to build a recommendation system or product search engi
 1. Use word2vec/LDA/GloVe to transform natural language and clicks/downloads/purchases/sessions info into feature vectors.
 -----------------------
 
-1.	**Word vector**
+1.	**Word vector**  
   *	It’s a little bit challenging to figure out the best training parameters for word2vec. Fortunately, Levy & Goldberg’s paper pointed us to the right direction:
 Improving Distributional Similarity with Lessons Learned from Word Embeddings
 From their paper:
@@ -16,24 +16,24 @@ From their paper:
 My own experience with word2vec + deep learning also shows SGNS (cbow=0 and hs=0) is the best option.
   *	For SGNS, here is what I believe really happens during the training:
 If two words appear together, the training will try to increase their cosine similarity. If two words never appear together, the training will reduce their cosine similarity. So if there are a lot of user queries such as “auto insurance” and “car insurance”, then “auto” vector will be similar to “insurance” vector (cosine similarity ~= 0.3) and “car” vector will also be similar to “insurance” vector. Since “insurance”, “loan” and “repair” rarely appear together in the same context, their vectors have small mutual cosine similarity (cosine similarity ~= 0.1). We can treat them as orthogonal to each other and think them as different dimensions. After training is complete, “auto” vector will be very similar to “car” vector (cosine similarity ~= 0.6) because both of them are similar in “insurance” dimension, “loan” dimension and “repair” dimension.   This intuition will be useful if you want to better design your training data to meet the goal of your text learning task.
-2.	**Query vector**
+2.	**Query vector**  
 A query usually has 1-10 words. There are 4 ways to generate query vectors. You can use them together or separately.
 
-  * **Use composition**:
+  * **Use composition**  
    For a query "hotel deal", you can first train vectors for "hotel" and "deal" using all query set. Then vector of "hotel deal" can be represented by taking average of vectors of "hotel" and "deal".
 
-  * **Use downloads/clicks/purchases info**:
+  * **Use downloads/clicks/purchases info**  
    If user searches for a query1, and then clicks an itemA. Gather all the set of (query item) pairs. Then you can train vectors for query and item with word2vec
 
-  * **Use session info**:
+  * **Use session info**  
    If user searches for query1, query2, query3 in a user session, put (query1 query2 query3) together as a sentence. Then you can train vectors for query1, query2 and query3 with word2vec
 
-  *	**Use tri-letter gram**
+  *	**Use tri-letter gram**  
 Another way to use word2vec is to transform training data into tri-letter gram format. Say if we have a query called “best hotel deal”. We can transform it into “bes est hot ote tel dea eal”. Then use word2vec to train vector for each tri-letter gram. Query vector is just an average of tri-letter gram vectors.
 Tri-letter gram vector can be useful in detecting meanings of misspellings, unknown words and domain names. For example, if someone types “cooool”, we can figure out its meaning is similar to “cool”.
 
 
-3.	**Sentence and paragraph vector**
+3.	**Sentence and paragraph vector**  
 We have to set our expectation reasonable here: there exists no such magic to accurately transform sentence and paragraph with infinite possibilities into 300-dimension vector with word2vec. Can you image we spit out 300 random numbers instead of saying a whole sentence to convey our meaning?  For word and phrase, since they appear in a lot of contexts, we can utilize those contexts. However, for sentence and paragraph, they usually only appear once in training corpus. A better way to represent sentence or paragraph is to use LDA. A major difference between word2vec and LDA is that word2vec treats everything as a single training corpus whereas LDA you have to have multiple documents. In word2vec two words are similar if they appear adjacent to each other very often or have similar contexts. While in LDA two words are similar if they appear together in a lot of documents. With LDA, your sentence or paragraph can be represented as a vector of topics.
 
 
