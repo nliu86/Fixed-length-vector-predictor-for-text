@@ -34,7 +34,7 @@ Tri-letter gram vector can be useful in detecting meanings of misspellings, unkn
 
 
 3.	**Sentence and paragraph vector**  
-We have to set our expectation reasonable here: there exists no such magic to accurately transform sentence and paragraph with infinite possibilities into 300-dimension vector with word2vec. Can you image we spit out 300 random numbers instead of saying a whole sentence to convey our meaning?  For word and phrase, since they appear in a lot of contexts, we can utilize those contexts. However, for sentence and paragraph, they usually only appear once in training corpus. A better way to represent sentence or paragraph is to use LDA. A major difference between word2vec and LDA is that word2vec treats everything as a single training corpus whereas LDA you have to have multiple documents. In word2vec two words are similar if they appear adjacent to each other very often or have similar contexts. While in LDA two words are similar if they appear together in a lot of documents. With LDA, your sentence or paragraph can be represented as a vector of topics.
+We have to set our expectation reasonable here: there exists no such magic to accurately transform sentence and paragraph with infinite possibilities into 300-dimension vector with word2vec. Can you image we spit out 300 random numbers instead of saying a whole sentence to convey our meaning?  For word and phrase, since they appear in a lot of contexts, we can utilize those contexts. However, for sentence and paragraph, they usually only appear once in training corpus. A better way to represent sentence or paragraph is to use LDA. A major difference between word2vec and LDA is that word2vec treats everything as a single training corpus whereas LDA you have to have multiple documents. In word2vec two words are similar if they appear adjacent to each other very often or have similar contexts. While in LDA two words are similar if they appear together in a lot of documents, thus they belong to the same topic. With LDA, sentence or paragraph can be represented as a vector of topics.
 
 
 2.  Do high dimension nearest neighbor search to find similar items.
@@ -44,8 +44,3 @@ All the vectors above can be used to do high dimension nearest neighbor search t
 3. Build a deep learning model using user feedback such as clicks/purchases.
 -----------------------
 All the feature engineering with word2vec/LDA/GloVe is very useful for deep learning. For machine learning, it is good to have feature that will help machine learning model to memorize but also help it to generalize. Embedding vectors have exactly this kind of property. It's unique: when you see a vector, you know it's associated with a certain item. But this vector has distance measure with other vectors, which help model to generalize to the neighborhood of this vector. For my classification problem with 1TB training data and 200 million rows, deep-learning-based model outperforms simple neural network model by more than 10%. 
-
-
-
-
-
